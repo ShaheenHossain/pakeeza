@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_order_slip_document">
+        <t t-call="web.internal_layout">
+            <style type="text/css">
+                body {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 14px;
+                }
+                table {
+                    width: 50%;
+                }
+                table, th, td {
+                  border: 1px solid black;
+                  border-collapse: collapse;
+                }
+                .footer {
+                    width: 50%; 
+                    text-align: center; 
+                    float: left;
+                }
+                .text-center {
+                    text-align: center;
+                }
+                .description_heading {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+            </style>
+            <t t-set="o" t-value="doc.with_context(lang=lang)" />
+            <div class="page">
+                <div class="row">
+                    <div style="width: 100%; text-align: center;">
+                        Order Slip
+                    </div>
+                    <table style="width:100%">
+                        <tr>
+                            <td>Order No &amp; DT</td>
+                            <td colspan="3"><span class="text-nowrap" t-field="doc.name"/></td>
+                            <td>Taste</td>
+                            <td></td>
+                            <td>Bale No</td>
+                            <td><span class="text-nowrap" t-field="doc.picking_ids.tracking_number"/></td>
+                        </tr>
+                        <tr>
+                            <td>C_Order No &amp; DT</td>
+                            <td colspan="2"><span class="text-nowrap" t-field="doc.name"/></td>
+                            <td>Lorry</td>
+                            <td></td>
+                            <td colspan="2">Destination</td>
+                            <td><span class="text-nowrap" t-field="doc.picking_ids.transport_location_line.destination_location_id"/></td>
+                        </tr>
+                        <tr class="description_heading">
+                            <td colspan="3" class="text-center">Brand &amp; Item Name</td>
+                            <td class="text-center">Qty</td>
+                            <td colspan="4" class="text-center">Narration</td>
+                        </tr>
+                        <t t-if="not doc.order_line">
+                            <tr>
+                                <td colspan="3"></td>
+                                <td></td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td colspan="3" class="text-center"><span class="text-nowrap" t-field="line.product_id.name"/></td>
+                                    <td class="text-center"><span class="text-nowrap" t-field="line.product_uom_qty"/></td>
+                                    <td colspan="4" class="text-center"></td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr>
+                            <td rowspan="4" colspan="3" style="vertical-align: bottom;">Total Bits</td>
+                            <td rowspan="3"></td>
+                            <td>Size</td>
+                            <td colspan="2">Gift Details</td>
+                            <td>Pieces</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="2"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="2"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="text-center"><span class="text-nowrap" t-esc="sum(x.product_uom_qty for x in doc.order_line)" /></td>
+                            <td></td>
+                            <td colspan="2"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <span class="footer">
+                        <div>Packed By <span><span class="text-nowrap" t-field="user.name" /></span></div>
+                        <div>Prepared By <span><span class="text-nowrap" t-field="user.name" /></span></div>
+                    </span>
+                    <span class="footer">Checked By <span class="text-nowrap" t-field="user.name" /></span>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_order_slip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="pakeeza.report_order_slip_document"
+                    t-lang="doc.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

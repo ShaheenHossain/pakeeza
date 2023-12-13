@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_packing_slip_document">
+        <t t-call="web.internal_layout">
+            <style>
+                body {
+                margin: 0;
+                padding: 0;
+                }
+                table {
+                width: 50%;
+                }
+                table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                }
+                .footer {
+                width: 50%;
+                text-align: center;
+                float: left;
+                }
+                .description>td {
+                text-align: center;
+                font-weight: bold;
+                }
+                .description_lines>td {
+                text-align: center;
+                }
+                .footer_para>p{
+                margin: 1px 0;
+                }
+            </style>
+            <t t-set="o" t-value="doc.with_context(lang=lang)" />
+            <div class="page">
+                <div class="row">
+                    <div style="width: 100%; margin: 0 15px;">
+                        <div style="width: 50%; text-align: left; float: left;">
+                            <div>PSNO <span t-field="doc.name"/></div>
+                            <div>Date <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/></div>
+                        </div>
+                        <div style="width: 50%; text-align: center; float: left;">Packing Slip</div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <table style="width:100%;">
+                        <tr>
+                            <td>Bale No</td>
+                            <td></td>
+                            <td>Order No</td>
+                            <td><span t-field="doc.origin"/></td>
+                            <td>Destination</td>
+                            <td>
+                                <t t-if="doc.transport_location_line">
+                                <span class="text-nowrap" t-field="doc.transport_location_line.destination_location_id"/>
+
+                                </t>
+                            </td>
+                            <td>Lorry</td>
+                            <td><span t-field="doc.lr_number"/></td>
+                        </tr>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td colspan="4"><span t-field="doc.partner_id.name"/></td>
+                            <td>Ledger Code</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>C_Order No</td>
+                            <td colspan="2"><span t-field="doc.origin"/></td>
+                            <td>Proforma No</td>
+                            <td></td>
+                            <td>Advance Amt</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr class="description">
+                            <td colspan="5">Brand Name &amp; Design Name</td>
+                            <td>Qty</td>
+                            <td>Rate</td>
+                            <td>Amount</td>
+                        </tr>
+                        <t t-set="lines" t-value="o.move_lines"/>
+                        <tr t-foreach="lines" t-as="move" class="description_lines">
+                            <td colspan="5"><span t-field="move.product_id.name"/></td>
+                            <td><span t-field="move.product_uom_qty"/></td>
+                            <td><span widget="monetory" t-field="move.product_price"/></td>
+                            <td><span t-esc="move.product_price * move.product_uom_qty"/></td>
+                        </tr>
+                        <tr>
+                            <td>Less CD</td>
+                            <td></td>
+                            <td>Spe D is <span></span></td>
+                            <td>Add Fright</td>
+                            <td>
+                                <t t-if="doc.transpoter_route_id">
+                                    <t t-if="doc.transpoter_route_id.location_details_ids">
+                                        <span t-esc="sum(x.distance for x in doc.transpoter_route_id.location_details_ids)"/>
+                                    </t>
+                                </t>
+                            </td>
+                            <td><span t-esc="sum(x.product_uom_qty for x in lines)"/></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>IGST</td>
+                            <td colspan="2">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td><span t-esc="doc.get_igst_amount()"/></td>
+                                        <td>CGST</td>
+                                        <td><span t-esc="doc.get_cgst_amount()"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>SGST</td>
+                                        <td><span t-esc="doc.get_sgst_amount()"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>TCS</td>
+                                        <td><span t-field="doc.partner_id.tcs"/></td>
+                                        <td>Round</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>Size</td>
+                                        <td>Gift Details</td>
+                                        <td>Pieces</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td colspan="3" style="text-align: right; vertical-align: center">Bill
+                                Amount</td>
+                            <td style="text-align: center;"><span t-esc="doc.get_total_bill_amount()"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div width="100%">
+                        <span class="footer">
+                            <div>Packed By <span><span class="text-nowrap" t-field="user.name" /></span></div>
+                            <div>Billed By <span><span class="text-nowrap" t-field="user.name" /></span></div>
+                        </span>
+                        <span class="footer">Verified By <span><span class="text-nowrap" t-field="user.name" /></span></span>
+                        <div style="clear: both;"></div>
+                        <div class="footer_para">
+                            <p>Dear <span></span></p>
+                            <p>We are following these steps as it now.</p>
+                            <p>Step 1. Order Receiving By customer or Agent</p>
+                            <p>Step 2. If the customer wants goods with Advance System, we prepare a
+                                proforma Invoice (PI) and send it to the customer &amp; agent for making
+                                payment. After receiving payment, we generate the order and give the
+                                order copy to the packing sector. If the customer wants goods with a
+                                20-day sight, we generate the order and give the order copy to the
+                                packing sector.</p>
+                            <p>Step 3. Goods are packed as per the order slip, and packers create a
+                                Packing Slip manually, passing it to the billing section.</p>
+                            <p>Step 4. Generate Packing slip as per packed items.</p>
+                            <p>Step 5. Generate Invoice copy</p>
+                            <p>Step 6. Generate JSON File with software help</p>
+                            <p>Step 6A. Use E-invoice port for uploading JSON File and generating
+                                E-Invoice</p>
+                            <p>Step 7. Generate Ewaybill and take a printout of Ewaybill</p>
+                            <p>Step 7A. Copy and paste Ewaybill number in the invoice with edit
+                                option</p>
+                            <p>Step 7B. Take a printout of E-invoice</p>
+                            <p>Step 8. Generate Goods Forwarding Note</p>
+                            <p>Step 9. Print Booking Instruction Slip</p>
+                            <p>Step 10. Enter Lorry Receipt number in the invoice with sale bill
+                                edit option</p>
+                            <p>Step 11. Take a print of 3 copies: 1 Original, 2 Agent Copy, 3 File
+                                Copy</p>
+                            <p>Step 12. Send Invoice copy to the Customer and Agent by mail or
+                                Whatsapp</p>
+                            <p>Step 13. Print Agent-wise goods booking list and send it to the Agent
+                                by mail</p>
+                        </div>
+                        <div style="margin-top: 20px; color: red;">
+                            <p>Note I will Send Goods forwarding Note Model </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_packing_slip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="pakeeza.report_packing_slip_document"
+                    t-lang="doc.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

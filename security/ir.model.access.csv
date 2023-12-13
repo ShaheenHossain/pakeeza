@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_grade,res_grade,model_res_grade,sales_team.group_sale_salesman,1,1,1,1
+access_res_firm,res_firm,model_res_firm,sales_team.group_sale_salesman,1,1,1,1
+access_res_sis,res_sis,model_res_sis,sales_team.group_sale_salesman,1,1,1,1
+access_res_tcs,res_tcs,model_res_tcs,sales_team.group_sale_salesman,1,1,1,1
+access_res_taste,res_taste,model_res_taste,sales_team.group_sale_salesman,1,1,1,1

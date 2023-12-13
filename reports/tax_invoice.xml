@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_tax_invoice_document">
+        <t t-call="web.internal_layout">
+            <style type="text/css">
+                .c_table *, ::after, ::before {
+                box-sizing: border-box;
+                }
+                body {
+                margin: 0 auto;
+                padding: 0 auto;
+                font-size: 14px;
+                font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica
+                Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI
+                Symbol","Noto Color Emoji";}
+
+                .c_table.container {
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+                }
+                .c_table.container {
+                max-width: 1140px;
+                }
+                .c_table .row {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+                }
+                .c_table .col-md-4 {
+                -ms-flex: 0 0 33.333333%;
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                }
+                .c_table .text-center {
+                text-align: center!important;
+                }
+                .c_table .text-right {
+                text-align: right!important;
+                }
+                .c_table .col-md-12 {
+                -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                }
+                .c_table .h1, .c_table h2 {
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+                line-height: 1.2;
+                }
+                .c_table .h2,.c_table h2 {
+                font-size: 2rem; margin-top: 0;
+                }
+                .c_table .col-md-7 {
+                -ms-flex: 0 0 58.333333%;
+                flex: 0 0 58.333333%;
+                max-width: 58.333333%;
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                }
+                .c_table .col-md-5 {
+                -ms-flex: 0 0 41.666667%;
+                flex: 0 0 41.666667%;
+                max-width: 41.666667%;
+                position: relative;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                }
+                .c_table{margin-bottom: 0px; border: 1px solid;}
+                .c_table p{margin-bottom: 0px; margin-top: 0; }
+                .left_space {padding-left:20px;}
+                .bt_top{border-top: 1px solid;}
+                .bt_left{border-left: 1px solid;}
+                table {
+                border-top:1px solid #000;
+                border-collapse:collapse;
+                padding:8px;
+                width:100%;
+                }
+
+                table th{text-align:left;}
+                table .right{text-align:right;}
+                table .center{text-align:center;}
+                table td {
+                border:0px solid #b3adad;
+                text-align:left;
+                padding:5px;
+                background: #ffffff;
+                color: #000;
+                }
+                table th {
+                padding:5px;
+                color: #000;
+                }
+                .border td{ border:1px solid #000;}
+                .sub_box > div{
+                    margin: 3px 0;
+                }
+                .middle_sub > div > p {
+                    margin: 3px 0;
+                }
+            </style>
+            <t t-set="o" t-value="doc.with_context(lang=lang)" />
+            <div class="page">
+                <div style="width:100%; text-align: right; font-weight: bold;">
+                    Original for Receipent
+                </div>
+                <div class="row">
+                    <div class="container c_table">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div>GSTIN:<span> 33AADPT0832C1Z8</span></div>
+                                <div>State Code:<span> 33</span></div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <p>
+                                    <strong style="text-decoration: underline">TAX INVOICE</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <div>CELL:<span> 09043620860</span></div>
+                                <div>CELL:<span> 09043043105</span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h2>
+                                    <strong>The Hindustan Lungi Coy</strong>
+                                </h2>
+                                <p> 
+                                    104 Gangathara Swami Madalaya St, <br />
+                                    Pichanoor, Gudiyatham. <br />
+                                    Pin632 601 Vellore ( Dt)<br /><br />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container c_table">
+                        <div class="row bt_top">
+                            <div class="col-md-7">
+                                <p>
+                                    <strong>To,</strong>
+                                </p>
+                                <div class="left_space">
+                                    <p>
+                                        <div>M/s. <strong> <span t-field="doc.partner_id.name" /></strong></div>
+                                        <div>C\O. <span t-field="doc.partner_id.name" /></div>
+                                        <div><span t-field="doc.partner_id.street" /></div>
+                                        <div><span t-field="doc.partner_id.street2" /></div>
+                                        <div>Pin <span t-field="doc.partner_id.zip" /></div>
+                                        <div>GSTIN: <span t-field="doc.partner_id.vat" /></div>
+                                        <div>State Code: <span t-field="doc.partner_id.state_id.code" /></div>
+                                        <div>Ph: <span t-field="doc.partner_id.phone" /></div>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-5 bt_left">
+                                <p></p>
+                                <div class="row middle_sub">
+                                    <div class="col-md-4">
+                                        <p>
+                                            <strong>INVOICE No.: </strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p>
+                                            <strong t-field="doc.name"></strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>
+                                            <strong>INVOICE DATE: </strong>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p t-field="doc.invoice_date"/>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <p>Order No: </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p t-field="doc.invoice_origin"/>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <p>Order Date: </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p t-field="doc.invoice_date"/>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <p>Booked By: </p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p t-field="doc.partner_id.name" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <table style="border-left: black 1px solid; border-right: black 1px solid; border-bottom: black 1px solid;">
+                        <tbody>
+                            <tr>
+                                <td>Bale Nos</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                                <td>L/R No.</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                                <td>Weight</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                            </tr>
+                            <tr>
+                                <td>Transport</td>
+                                <td>
+                                    <span style="margin: 0px 30px 0px -5px">:</span>
+                                    <t t-if="doc.partner_id">
+                                        <span t-field="doc.partner_id.transport_name" />
+                                    </t>
+                                </td>
+                                <td>L/R DATE</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                                <td>Freight</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                            </tr>
+                            <tr>
+                                <td>Place</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                                <td>E-WAY BILL NO</td>
+                                <td><span style="margin: 0px 30px 0px -5px">:</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <table class="border">
+                        <thead>
+                            <tr>
+                                <th>S.No.<br /></th>
+                                <th class="center">Description of Goods</th>
+                                <th>HSN</th>
+                                <th class="right">Pcs</th>
+                                <th class="right">Rate</th>
+                                <th class="right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                            <t t-set="price_sub_total" t-value="sum(x.price_subtotal for x in lines)" />
+                            <t t-set="i" t-value="1" />
+                            <t t-foreach="lines" t-as="line">
+                                <tr>
+                                    <td><span t-esc="i"/></td>
+                                    <td>
+                                        <span class="text-nowrap" t-field="line.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span class="text-nowrap" t-field="line.product_id.l10n_in_hsn_code"/>
+                                    </td>
+                                    <td class="right">
+                                        <span class="text-nowrap" t-field="line.quantity"/>
+                                    </td>
+                                    <td class="right">
+                                        <span class="text-nowrap" t-field="line.price_unit"/>
+                                    </td>
+                                    <td class="right">
+                                        <span class="text-nowrap" t-field="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                                <t t-set="i" t-value="i+1"/> 
+                            </t>
+                            <tr>
+                                <td></td>
+                                <td>Due Date:<span class="text-nowrap" t-field="doc.invoice_date_due"/>
+                                    <span style="float:right;">Gross Total: <span class="text-nowrap" t-esc="price_sub_total"/>
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td  class="right"><Strong><span class="text-nowrap" t-esc="sum(x.quantity for x in lines)"/></Strong></td>
+                                <td></td>
+                                <td  class="right"><Strong><span class="text-nowrap" t-esc="price_sub_total"/></Strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="border">
+                        <tbody>
+                            <tr>
+                                <td><strong>Rupees: </strong> <span class="text-nowrap" t-esc="doc.currency_id.amount_to_text(price_sub_total)"/></td>
+                                <td rowspan="2" class="sub_box">
+                                    <div>SUB TOTAL</div>
+                                    <div>Add: IGST 5%</div>
+                                    <div>TCS - 0.075% A\C</div>
+                                    <div>Round Off</div>
+                                </td>
+                                <td  rowspan="2" class="right sub_box">
+                                    <div><span t-esc="doc.get_sub_total_amount()"/></div>
+                                    <div><span t-esc="doc.get_igst_amount()"/></div>
+                                    <div><span t-field="doc.partner_id.tcs"/></div>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&#160;&#160;&#160;<strong style="text-decoration:underline">Terms &amp; Conditions :</strong><br/>
+                                    1. Strictly Sales Bonus is not allowed if payment not received within 30 days.<br/>
+                                    2. We are not responsible for any loss or damage in transit.<br/>
+                                    3. Goods once sold cannot be taken back under any circumstances.<br/>
+                                    4. All disputes subject to Gudiyatham Jurisdiction.<br/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="border">
+                        <tbody>
+                            <tr>
+                                <td rowspan="2"><strong>Indian bank A\C No 935728335 - IFSC - IDIB000G018 - Branch Gudiyatham<br/><br/>State Bank Of India A\C No 30237730536 - IFSC SBIN0000842 BR - GYM.</strong> </td>
+                                <td ><strong>NET TOTAL</strong> </td>
+                                <td class="right"><strong><span t-esc="doc.get_total_bill_amount()"/></strong> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="right"><strong>For The Hindustan Lungi Coy<br/><br/>Authorised Signature</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_tax_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="pakeeza.report_tax_invoice_document"
+                    t-lang="doc.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

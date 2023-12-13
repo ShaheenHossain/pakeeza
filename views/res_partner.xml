@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_inherit_form" model="ir.ui.view">
+        <field name="name">view_partner_inherit_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='contact_addresses']" position="before">
+                <page name='additional_information' string="Additional Information" autofocus="autofocus">
+                    <group name="container_row_2">
+                        <group string="Organization" name="organization" priority="1">
+                            <field name="grades"/>
+                            <field name="firm_type"/>
+                            <field name="area_taste"/>
+                            <field name="concern"/>
+                        </group>
+                        <group string="Legal" name="legal" priority="2">
+                            <field name="pan_card_number"/>
+                            <field name="aadhar_card_number"/>
+                        </group>
+                    </group>
+
+                    <group name="container_row_2">
+                        <group string="Address" name="address" priority="3">
+                            <field name="district"/>
+                        </group>
+                        <group string="Tax" name="tax" priority="4">
+                            <field name="firm_turn_over" widget="monetary"/>
+                            <field name="tcs"/>
+                        </group>
+                    </group>
+
+                    <group name="container_row_2">
+                        <group string="Credit" name="credit" priority="5">
+                            <field name="maximum_credit_days" widget="monetary"/>
+                            <field name="maximum_credit_limit" widget="monetary"/>
+                        </group>
+                        <group string="Transport" name="transport" priority="6">
+                            <field name="transport_name" />
+                            <field name="goods_booking_place"/>
+                        </group>
+                    </group>
+                    <group name="container_row_2">
+                        <group string="Personal" name="personal" priority="7">
+                            <field name="birth_date"/>
+                            <field name="marriage_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
